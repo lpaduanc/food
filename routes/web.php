@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('admin/planos/store', [PlanoController::class, 'store'])->name('planos.store');
+Route::get('admin/planos/create', [PlanoController::class, 'create'])->name('planos.create');
 Route::get('admin/planos', [PlanoController::class, 'index'])->name('planos.index');
 
 Route::get('/', function () {

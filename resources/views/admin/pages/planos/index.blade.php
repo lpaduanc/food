@@ -27,10 +27,10 @@
                                 {{ $plano->nome }}
                             </td>
                             <td>
-                                {{ $plano->preco }}
+                                R$ {{ number_format($plano->preco, 2, ',', '.')}}
                             </td>
                             <td>
-                                <a href="" class="btn btn-warning">Ver</a>
+                                <a href="{{ route('planos.show', $plano->url) }}" class="btn btn-warning">Ver</a>
                             </td>
                         </tr>
                     @endforeach

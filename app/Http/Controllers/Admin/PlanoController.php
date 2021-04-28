@@ -39,4 +39,15 @@ class PlanoController extends Controller
 
         return redirect()->route('planos.index');
     }
+
+    public function show($url)
+    {
+        if (!$plano = $this->planoRepository->where('url', $url)->first()) {
+            return redirect()->back();
+        }
+
+        return view('admin.pages.planos.show', [
+            'plano' => $plano
+        ]);
+    }
 }

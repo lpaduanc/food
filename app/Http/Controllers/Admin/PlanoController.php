@@ -73,4 +73,30 @@ class PlanoController extends Controller
             'filtro' => $request->except('_token')
         ]);
     }
+
+    public function edit($url)
+    {
+        $plano = $this->planoRepository->where('url', $url)->first();
+
+        if (!$plano) {
+            return redirect()->back();
+        }
+
+        return view('admin.pages.planos.edit', [
+            'plano' => $plano
+        ]);
+    }
+
+    public function update(Request $request, $url)
+    {
+        $plano = $this->planoRepository->where('url', $url)->first();
+
+        if (!$plano) {
+            return redirect()->back();
+        }
+
+        $plano->update($request->all());
+
+        return redirect()->route('planos.index');
+    }
 }

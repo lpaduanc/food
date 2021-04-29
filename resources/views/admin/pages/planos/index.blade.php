@@ -9,7 +9,18 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            #Filtros
+            <form action="{{ route('planos.search') }}" method="post" class="form form-inline">
+                @csrf
+                <input
+                    type="text"
+                    name="filtro"
+                    id="filtro"
+                    placeholder="Nome ou descrição"
+                    class="form-control"
+                    value="{{ $filtro['filtro'] ?? '' }}"
+                >
+                <button type="submit" class="btn btn-dark">Filtrar</button>
+            </form>
         </div>
         <div class="card-body">
             <table class="table table-condensed">
@@ -38,7 +49,11 @@
             </table>
         </div>
         <div class="card-footer">
-            {{ $planos->links('pagination::bootstrap-4') }}
+            @if (isset($filtro))
+                {{ $planos->appends($filtro)->links('pagination::bootstrap-4') }}
+            @else
+                {{ $planos->links('pagination::bootstrap-4') }}
+            @endif
         </div>
     </div>
 @stop

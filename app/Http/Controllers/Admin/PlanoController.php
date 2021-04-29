@@ -42,12 +42,35 @@ class PlanoController extends Controller
 
     public function show($url)
     {
-        if (!$plano = $this->planoRepository->where('url', $url)->first()) {
+        $plano = $this->planoRepository->where('url', $url)->first();
+
+        if (!$plano) {
             return redirect()->back();
         }
 
         return view('admin.pages.planos.show', [
             'plano' => $plano
+        ]);
+    }
+
+    public function destroy($url)
+    {
+        $plano = $this->planoRepository->where('url', $url)->first();
+
+        if (!$plano) {
+            return redirect()->back();
+        }
+
+        $plano->delete();
+
+        return redirect()->route('planos.index');
+    }
+
+    public function search(Request $request)
+    {
+        return view('admin.pages.planos.index', [
+            'planos' => $this->planoRepository->pesquisar($request->filtro),
+            'filtro' => $request->except('_token')
         ]);
     }
 }

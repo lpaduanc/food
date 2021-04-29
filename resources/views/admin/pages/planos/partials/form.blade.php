@@ -1,3 +1,5 @@
+@include('admin.includes.alerts')
+
 <div class="form-group">
     <label for="nome">Nome</label>
     <input
@@ -6,8 +8,8 @@
         id="nome"
         class="form-control"
         placeholder="nome"
-        value="{{ $plano->nome ?? '' }}"
-        >
+        value="{{ $plano->nome ?? old('nome') }}"
+    >
 </div>
 <div class="form-group">
     <label for="descricao">Descrição</label>
@@ -17,7 +19,7 @@
         id="descricao"
         class="form-control"
         placeholder="descrição"
-        value="{{ $plano->descricao ?? '' }}"
+        value="{{ $plano->descricao ?? old('descricao') }}"
     >
 </div>
 <div class="form-group">
@@ -28,7 +30,7 @@
         id="preco"
         class="form-control"
         placeholder="preço"
-        value="{{ $plano->preco ??  null }}"
+        value="{{ $plano->preco ??  old('preco') }}"
     >
 </div>
 <div class="form-group">

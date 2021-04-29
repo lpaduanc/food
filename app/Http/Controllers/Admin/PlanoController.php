@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUpdatePlanoRequest;
 use App\Models\Plano;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class PlanoController extends Controller
 {
@@ -29,13 +29,9 @@ class PlanoController extends Controller
         return view('admin.pages.planos.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreUpdatePlanoRequest $storeUpdatePlanoRequest)
     {
-        $data = $request->all();
-
-        $data['url'] = Str::kebab($request->nome);
-
-        $this->planoRepository->create($data);
+        $this->planoRepository->create($storeUpdatePlanoRequest->all());
 
         return redirect()->route('planos.index');
     }
@@ -87,7 +83,7 @@ class PlanoController extends Controller
         ]);
     }
 
-    public function update(Request $request, $url)
+    public function update(StoreUpdatePlanoRequest $storeUpdatePlanoRequest, $url)
     {
         $plano = $this->planoRepository->where('url', $url)->first();
 
@@ -95,7 +91,7 @@ class PlanoController extends Controller
             return redirect()->back();
         }
 
-        $plano->update($request->all());
+        $plano->update($storeUpdatePlanoRequest->all());
 
         return redirect()->route('planos.index');
     }

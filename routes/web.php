@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DetalhesPlanoController;
 use App\Http\Controllers\Admin\PlanoController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +16,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('admin')->group(function() {
+
+    /**
+     * Detalhes do plano
+     */
+    Route::get('planos/{url}/detalhes', [DetalhesPlanoController::class, 'index'])->name('detalhes.plano.index');
+
+    /**
+     * Plano
+     */
     Route::get('planos/novo', [PlanoController::class, 'create'])->name('planos.create');
     Route::put('planos/{url}', [PlanoController::class, 'update'])->name('planos.update');
     Route::get('planos/{url}/editar', [PlanoController::class, 'edit'])->name('planos.edit');
@@ -24,6 +34,9 @@ Route::prefix('admin')->group(function() {
     Route::post('planos/salvar', [PlanoController::class, 'store'])->name('planos.store');
     Route::get('planos', [PlanoController::class, 'index'])->name('planos.index');
 
+    /**
+     * Dashboard
+     */
     Route::get('/', [PlanoController::class, 'index'])->name('admin.index');
 });
 

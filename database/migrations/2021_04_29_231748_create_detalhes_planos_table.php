@@ -15,8 +15,15 @@ class CreateDetalhesPlanosTable extends Migration
     {
         Schema::create('detalhes_planos', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('plano_id');
             $table->string('nome');
             $table->timestamps();
+
+            $table
+                ->foreign('plano_id')
+                ->references('id')
+                ->on('planos')
+                ->onDelete('cascade');
         });
     }
 

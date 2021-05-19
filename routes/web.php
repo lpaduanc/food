@@ -20,6 +20,8 @@ Route::prefix('admin')->group(function() {
     /**
      * Detalhes do plano
      */
+    Route::post('planos/{url}/detalhes', [DetalhesPlanoController::class, 'store'])->name('detalhes.plano.store');
+    Route::get('planos/{url}/detalhes/create', [DetalhesPlanoController::class, 'create'])->name('detalhes.plano.create');
     Route::get('planos/{url}/detalhes', [DetalhesPlanoController::class, 'index'])->name('detalhes.plano.index');
 
     /**

@@ -17,7 +17,7 @@
             <a href="{{ route('detalhes.plano.index', $plano->url) }}" class="active">Detalhes</a>
         </li>
     </ol>
-    <h1>Detalhes do Plano <a href="{{ route('planos.create') }}" class="btn btn-dark">Novo Plano</a></h1>
+    <h1>Detalhes do Plano <a href="{{ route('detalhes.plano.create', $plano->url) }}" class="btn btn-dark">Novo</a></h1>
 @stop
 
 @section('content')

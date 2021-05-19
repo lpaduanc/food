@@ -35,4 +35,30 @@ class DetalhesPlanoController extends Controller
             'detalhes' => $plano->detalhes()->paginate(),
         ]);
     }
+
+    public function create($url)
+    {
+        $plano = $this->plano->where('url', $url)->first();
+
+        if (!$plano) {
+            return redirect()->back();
+        }
+
+        return view('admin.pages.planos.detalhes.create', [
+            'plano' => $plano,
+        ]);
+    }
+
+    public function store(Request $request, $url)
+    {
+        $plano = $this->plano->where('url', $url)->first();
+
+        if (!$plano) {
+            return redirect()->back();
+        }
+
+        $plano->detalhes()->create($request->all());
+
+        return redirect()->route('detalhes.plano.index', $plano->url);
+    }
 }

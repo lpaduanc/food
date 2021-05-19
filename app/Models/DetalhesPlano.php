@@ -9,6 +9,10 @@ class DetalhesPlano extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'nome',
+    ];
+
     // relacionamento de que o detalhe pertence a um plano
     public function plano()
     {

@@ -23,6 +23,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
+            @include('admin.includes.alerts')
             <table class="table table-condensed">
                 <thead>
                     <tr>
@@ -37,10 +38,7 @@
                                 {{ $detalhe->nome }}
                             </td>
                             <td>
-                                R$ {{ number_format($plano->preco, 2, ',', '.')}}
-                            </td>
-                            <td>
-                                <a href="{{ route('planos.show', $plano->url) }}" class="btn btn-warning">Ver</a>
+                                <a href="{{ route('detalhes.plano.show', [$plano->url, $detalhe->id]) }}" class="btn btn-warning">Ver</a>
                                 <a href="{{ route('detalhes.plano.edit', [$plano->url, $detalhe->id]) }}" class="btn btn-info">Editar</a>
                             </td>
                         </tr>

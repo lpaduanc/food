@@ -91,4 +91,35 @@ class DetalhesPlanoController extends Controller
 
         return redirect()->route('detalhes.plano.index', $plano->url);
     }
+
+    public function show($url, $idDetalhe)
+    {
+        $plano = $this->plano->where('url', $url)->first();
+        $detalhe = $this->detalhesPlanoRepository->find($idDetalhe);
+
+        if (!$plano || !$detalhe) {
+            return redirect()->back();
+        }
+
+        return view('admin.pages.planos.detalhes.show', [
+            'plano' => $plano,
+            'detalhe' => $detalhe,
+        ]);
+    }
+
+    public function destroy($planoUrl, $idDetalhe)
+    {
+        $plano = $this->plano->where('url', $planoUrl)->first();
+        $detalhe = $this->detalhesPlanoRepository->find($idDetalhe);
+
+        if (!$plano || !$detalhe) {
+            return redirect()->back();
+        }
+
+        $detalhe->delete();
+
+        return redirect()
+            ->route('detalhes.plano.index', $plano->url)
+            ->with('mensagem', 'Detalhe excluído com sucesso.');
+    }
 }

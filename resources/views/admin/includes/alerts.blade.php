@@ -7,3 +7,15 @@
         @endforeach
     </div>
 @endif
+
+@if (session('mensagem'))
+    <div class="alert alert-success">
+        {{ session('mensagem') }}
+    </div>
+@endif
+
+@if (session('erro'))
+    <div class="alert alert-warning">
+        {{ session('erro') }}
+    </div>
+@endif

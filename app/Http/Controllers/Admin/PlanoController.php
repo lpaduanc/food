@@ -51,10 +51,19 @@ class PlanoController extends Controller
 
     public function destroy($url)
     {
-        $plano = $this->planoRepository->where('url', $url)->first();
-
+        $plano = $this->planoRepository
+            ->with('detalhes')
+            ->where('url', $url)
+            ->first();
+        
         if (!$plano) {
             return redirect()->back();
+        }
+
+        if ($this->verificaSeExisteDetalhe($plano)) {
+            return redirect()
+                ->back()
+                ->with('erro', 'Não foi possível excluir. Plano possui detalhes.');
         }
 
         $plano->delete();
@@ -94,5 +103,11 @@ class PlanoController extends Controller
         $plano->update($storeUpdatePlanoRequest->all());
 
         return redirect()->route('planos.index');
+    }
+
+    // passar para um service
+    private function verificaSeExisteDetalhe(Plano $plano)
+    {
+        return $plano->detalhes->count() > 0;
     }
 }

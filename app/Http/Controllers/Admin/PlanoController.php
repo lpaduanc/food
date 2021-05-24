@@ -63,7 +63,7 @@ class PlanoController extends Controller
         if ($this->verificaSeExisteDetalhe($plano)) {
             return redirect()
                 ->back()
-                ->with('erro', 'Não foi possível excluir. Plano possui detalhes.');
+                ->with('erro', 'Impossível excluir. Plano possui detalhes.');
         }
 
         $plano->delete();

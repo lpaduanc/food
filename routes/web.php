@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DetalhesPlanoController;
 use App\Http\Controllers\Admin\PlanoController;
+use App\Http\Controllers\Admin\PerfilController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,12 +16,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('admin')->group(function() {
+Route::prefix('admin')
+    // ->namespace('Admin')
+    ->group(function() {
+
+    /**
+     * Perfis
+     */
+    Route::get('perfis/novo', [PerfilController::class, 'create'])->name('perfis.create');
+    Route::get('perfis', [PerfilController::class, 'index'])->name('perfis.index');
+    //  Route::resource('perfis', 'PerfilController');
 
     /**
      * Detalhes do plano
      */
-    Route::get('planos/{url}/detalhes/create', [DetalhesPlanoController::class, 'create'])->name('detalhes.plano.create');
+    Route::get('planos/{url}/detalhes/novo', [DetalhesPlanoController::class, 'create'])->name('detalhes.plano.create');
     Route::delete('planos/{url}/detalhes/{idDetalhe}', [DetalhesPlanoController::class, 'destroy'])->name('detalhes.plano.destroy');
     Route::get('planos/{url}/detalhes/{idDetalhe}', [DetalhesPlanoController::class, 'show'])->name('detalhes.plano.show');
     Route::put('planos/{url}/detalhes/{idDetalhe}', [DetalhesPlanoController::class, 'update'])->name('detalhes.plano.update');

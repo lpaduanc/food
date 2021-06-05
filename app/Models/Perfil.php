@@ -7,5 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Perfil extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'nome',
+        'descricao',
+    ];
 }

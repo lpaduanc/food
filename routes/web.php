@@ -25,6 +25,7 @@ Route::prefix('admin')
      */
     Route::get('perfis/novo', [PerfilController::class, 'create'])->name('perfis.create');
     Route::delete('perfis/{idPerfil}', [PerfilController::class, 'destroy'])->name('perfis.destroy');
+    Route::any('perfis/filtrar', [PerfilController::class, 'search'])->name('perfis.search');
     Route::get('perfis/{idPerfil}/editar', [PerfilController::class, 'edit'])->name('perfis.edit');
     Route::put('perfis/{idPerfil}', [PerfilController::class, 'update'])->name('perfis.update');
     Route::get('perfis/{idPerfil}', [PerfilController::class, 'show'])->name('perfis.show');

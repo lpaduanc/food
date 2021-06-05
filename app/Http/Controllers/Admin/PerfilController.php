@@ -127,4 +127,28 @@ class PerfilController extends Controller
 
         return redirect()->route('perfis.index');
     }
+
+    /**
+     * Search results
+     *
+     * @param  Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $perfis = $this->perfilRepository
+            ->where(function ($query) use ($request) {
+                if ($request->filtro) {
+                    $query
+                        ->where('nome', $request->filtro)
+                        ->orWhere('descricao', 'LIKE', "%{$request->filtrar}%");
+                }
+            })
+            ->paginate(1);
+
+        return view('admin.pages.perfis.index', [
+            'perfis' => $perfis,
+            'filtro' => $request->only('filtro'),
+        ]);
+    }
 }

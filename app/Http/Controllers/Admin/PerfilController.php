@@ -144,7 +144,7 @@ class PerfilController extends Controller
                         ->orWhere('descricao', 'LIKE', "%{$request->filtrar}%");
                 }
             })
-            ->paginate(1);
+            ->paginate();
 
         return view('admin.pages.perfis.index', [
             'perfis' => $perfis,

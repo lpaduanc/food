@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUpdatePerfilRequest;
 use App\Models\Perfil;
 use Illuminate\Http\Request;
 
@@ -34,62 +35,96 @@ class PerfilController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.perfis.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\StoreUpdatePerfilRequest  $storeUpdatePerfilRequest
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdatePerfilRequest $storeUpdatePerfilRequest)
     {
-        //
+        $this->perfilRepository->create($storeUpdatePerfilRequest->all());
+
+        return redirect()->route('perfis.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $idPerfil
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($idPerfil)
     {
-        //
+        $perfil = $this->perfilRepository->find($idPerfil);
+
+        if (!$perfil) {
+            return redirect()->back();
+        }
+
+        return view('admin.pages.perfis.show', [
+            'perfil' => $perfil,
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $idPerfil
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($idPerfil)
     {
-        //
+        $perfil = $this->perfilRepository->find($idPerfil);
+
+        if (!$perfil) {
+            return redirect()->back();
+        }
+        
+        return view('admin.pages.perfis.edit', [
+            'perfil' => $perfil,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\StoreUpdatePerfilRequest  $storeUpdatePerfilRequest
+     * @param  int  $idPerfil
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreUpdatePerfilRequest $storeUpdatePerfilRequest, $idPerfil)
     {
-        //
+        $perfil = $this->perfilRepository->find($idPerfil)->first();
+
+        if (!$perfil) {
+            return redirect()->back();
+        }
+
+        $perfil->update($storeUpdatePerfilRequest->all());
+
+        return redirect()->route('perfis.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $idPerfil
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($idPerfil)
     {
-        //
+        $perfil = $this->perfilRepository->find($idPerfil);
+
+        if (!$perfil) {
+            return redirect()->back();
+        }
+
+        $perfil->delete();
+
+        return redirect()->route('perfis.index');
     }
 }

@@ -24,6 +24,11 @@ Route::prefix('admin')
      * Perfis
      */
     Route::get('perfis/novo', [PerfilController::class, 'create'])->name('perfis.create');
+    Route::delete('perfis/{idPerfil}', [PerfilController::class, 'destroy'])->name('perfis.destroy');
+    Route::get('perfis/{idPerfil}/editar', [PerfilController::class, 'edit'])->name('perfis.edit');
+    Route::put('perfis/{idPerfil}', [PerfilController::class, 'update'])->name('perfis.update');
+    Route::get('perfis/{idPerfil}', [PerfilController::class, 'show'])->name('perfis.show');
+    Route::post('perfis/salvar', [PerfilController::class, 'store'])->name('perfis.store');
     Route::get('perfis', [PerfilController::class, 'index'])->name('perfis.index');
     //  Route::resource('perfis', 'PerfilController');
 

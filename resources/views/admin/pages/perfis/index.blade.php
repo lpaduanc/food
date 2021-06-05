@@ -17,7 +17,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <form action="" method="post" class="form form-inline">
+            <form action="{{ route('perfis.search') }}" method="post" class="form form-inline">
                 @csrf
                 <input
                     type="text"

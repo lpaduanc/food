@@ -98,7 +98,7 @@ class PerfilController extends Controller
      */
     public function update(StoreUpdatePerfilRequest $storeUpdatePerfilRequest, $idPerfil)
     {
-        $perfil = $this->perfilRepository->find($idPerfil)->first();
+        $perfil = $this->perfilRepository->find($idPerfil);
 
         if (!$perfil) {
             return redirect()->back();

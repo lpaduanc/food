@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DetalhesPlanoController;
 use App\Http\Controllers\Admin\PlanoController;
 use App\Http\Controllers\Admin\PerfilController;
+use App\Http\Controllers\Admin\PermissaoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +22,18 @@ Route::prefix('admin')
     ->group(function() {
 
     /**
+     * Permissões
+     */
+    Route::get('permissoes/novo', [PermissaoController::class, 'create'])->name('permissoes.create');
+    Route::delete('permissoes/{idPermissao}', [PermissaoController::class, 'destroy'])->name('permissoes.destroy');
+    Route::any('permissoes/filtrar', [PermissaoController::class, 'search'])->name('permissoes.search');
+    Route::get('permissoes/{idPermissao}/editar', [PermissaoController::class, 'edit'])->name('permissoes.edit');
+    Route::put('permissoes/{idPermissao}', [PermissaoController::class, 'update'])->name('permissoes.update');
+    Route::get('permissoes/{idPermissao}', [PermissaoController::class, 'show'])->name('permissoes.show');
+    Route::post('permissoes/salvar', [PermissaoController::class, 'store'])->name('permissoes.store');
+    Route::get('permissoes', [PermissaoController::class, 'index'])->name('permissoes.index');
+
+    /**
      * Perfis
      */
     Route::get('perfis/novo', [PerfilController::class, 'create'])->name('perfis.create');
@@ -31,7 +44,6 @@ Route::prefix('admin')
     Route::get('perfis/{idPerfil}', [PerfilController::class, 'show'])->name('perfis.show');
     Route::post('perfis/salvar', [PerfilController::class, 'store'])->name('perfis.store');
     Route::get('perfis', [PerfilController::class, 'index'])->name('perfis.index');
-    //  Route::resource('perfis', 'PerfilController');
 
     /**
      * Detalhes do plano

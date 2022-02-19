@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\Admin\DetalhesPlanoController;
-use App\Http\Controllers\Admin\PlanoController;
-use App\Http\Controllers\Admin\PerfilController;
-use App\Http\Controllers\Admin\PermissaoController;
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\PlanController;
+use App\Http\Controllers\Admin\PlanDetailsController;
+use App\Http\Controllers\Admin\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,54 +24,54 @@ Route::prefix('admin')
     /**
      * Permissões
      */
-    Route::get('permissoes/novo', [PermissaoController::class, 'create'])->name('permissoes.create');
-    Route::delete('permissoes/{idPermissao}', [PermissaoController::class, 'destroy'])->name('permissoes.destroy');
-    Route::any('permissoes/filtrar', [PermissaoController::class, 'search'])->name('permissoes.search');
-    Route::get('permissoes/{idPermissao}/editar', [PermissaoController::class, 'edit'])->name('permissoes.edit');
-    Route::put('permissoes/{idPermissao}', [PermissaoController::class, 'update'])->name('permissoes.update');
-    Route::get('permissoes/{idPermissao}', [PermissaoController::class, 'show'])->name('permissoes.show');
-    Route::post('permissoes/salvar', [PermissaoController::class, 'store'])->name('permissoes.store');
-    Route::get('permissoes', [PermissaoController::class, 'index'])->name('permissoes.index');
+    Route::get('permissions/create', [PermissionController::class, 'create'])->name('permissions.create');
+    Route::delete('permissions/{idPermissao}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
+    Route::any('permissions/filter', [PermissionController::class, 'search'])->name('permissions.search');
+    Route::get('permissions/{idPermissao}/edit', [PermissionController::class, 'edit'])->name('permissions.edit');
+    Route::put('permissions/{idPermissao}', [PermissionController::class, 'update'])->name('permissions.update');
+    Route::get('permissions/{idPermissao}', [PermissionController::class, 'show'])->name('permissions.show');
+    Route::post('permissions/store', [PermissionController::class, 'store'])->name('permissions.store');
+    Route::get('permissions', [PermissionController::class, 'index'])->name('permissions.index');
 
     /**
      * Perfis
      */
-    Route::get('perfis/novo', [PerfilController::class, 'create'])->name('perfis.create');
-    Route::delete('perfis/{idPerfil}', [PerfilController::class, 'destroy'])->name('perfis.destroy');
-    Route::any('perfis/filtrar', [PerfilController::class, 'search'])->name('perfis.search');
-    Route::get('perfis/{idPerfil}/editar', [PerfilController::class, 'edit'])->name('perfis.edit');
-    Route::put('perfis/{idPerfil}', [PerfilController::class, 'update'])->name('perfis.update');
-    Route::get('perfis/{idPerfil}', [PerfilController::class, 'show'])->name('perfis.show');
-    Route::post('perfis/salvar', [PerfilController::class, 'store'])->name('perfis.store');
-    Route::get('perfis', [PerfilController::class, 'index'])->name('perfis.index');
-
-    /**
-     * Detalhes do plano
-     */
-    Route::get('planos/{url}/detalhes/novo', [DetalhesPlanoController::class, 'create'])->name('detalhes.plano.create');
-    Route::delete('planos/{url}/detalhes/{idDetalhe}', [DetalhesPlanoController::class, 'destroy'])->name('detalhes.plano.destroy');
-    Route::get('planos/{url}/detalhes/{idDetalhe}', [DetalhesPlanoController::class, 'show'])->name('detalhes.plano.show');
-    Route::put('planos/{url}/detalhes/{idDetalhe}', [DetalhesPlanoController::class, 'update'])->name('detalhes.plano.update');
-    Route::get('planos/{url}/detalhes/{idDetalhe}/edit', [DetalhesPlanoController::class, 'edit'])->name('detalhes.plano.edit');
-    Route::post('planos/{url}/detalhes', [DetalhesPlanoController::class, 'store'])->name('detalhes.plano.store');
-    Route::get('planos/{url}/detalhes', [DetalhesPlanoController::class, 'index'])->name('detalhes.plano.index');
+    Route::get('profile/create', [ProfileController::class, 'create'])->name('profile.create');
+    Route::delete('profile/{idPerfil}', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::any('profile/filter', [ProfileController::class, 'search'])->name('profile.search');
+    Route::get('profile/{idPerfil}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('profile/{idPerfil}', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('profile/{idPerfil}', [ProfileController::class, 'show'])->name('profile.show');
+    Route::post('profile/store', [ProfileController::class, 'store'])->name('profile.store');
+    Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
 
     /**
      * Plano
      */
-    Route::get('planos/novo', [PlanoController::class, 'create'])->name('planos.create');
-    Route::put('planos/{url}', [PlanoController::class, 'update'])->name('planos.update');
-    Route::get('planos/{url}/editar', [PlanoController::class, 'edit'])->name('planos.edit');
-    Route::any('planos/filtrar', [PlanoController::class, 'search'])->name('planos.search');
-    Route::delete('planos/{url}', [PlanoController::class, 'destroy'])->name('planos.destroy');
-    Route::get('planos/{url}', [PlanoController::class, 'show'])->name('planos.show');
-    Route::post('planos/salvar', [PlanoController::class, 'store'])->name('planos.store');
-    Route::get('planos', [PlanoController::class, 'index'])->name('planos.index');
+    Route::get('plans/create', [PlanController::class, 'create'])->name('plans.create');
+    Route::put('plans/{url}', [PlanController::class, 'update'])->name('plans.update');
+    Route::get('plans/{url}/edit', [PlanController::class, 'edit'])->name('plans.edit');
+    Route::any('plans/filter', [PlanController::class, 'search'])->name('plans.search');
+    Route::delete('plans/{url}', [PlanController::class, 'destroy'])->name('plans.destroy');
+    Route::get('plans/{url}', [PlanController::class, 'show'])->name('plans.show');
+    Route::post('plans/store', [PlanController::class, 'store'])->name('plans.store');
+    Route::get('plans', [PlanController::class, 'index'])->name('plans.index');
 
     /**
      * Dashboard
      */
-    Route::get('/', [PlanoController::class, 'index'])->name('admin.index');
+    Route::get('/', [PlanController::class, 'index'])->name('admin.index');
+
+    /**
+     * Detalhes do plano
+     */
+    Route::get('plan/{url}/details/create', [PlanDetailsController::class, 'create'])->name('details.plan.create');
+    Route::delete('plan/{url}/details/{detailId}', [PlanDetailsController::class, 'destroy'])->name('details.plan.destroy');
+    Route::get('plan/{url}/details/{detailId}', [PlanDetailsController::class, 'show'])->name('details.plan.show');
+    Route::put('plan/{url}/details/{detailId}', [PlanDetailsController::class, 'update'])->name('details.plan.update');
+    Route::get('plan/{url}/details/{detailId}/edit', [PlanDetailsController::class, 'edit'])->name('details.plan.edit');
+    Route::post('plan/{url}/details', [PlanDetailsController::class, 'store'])->name('details.plan.store');
+    Route::get('plan/{url}/details', [PlanDetailsController::class, 'index'])->name('details.plan.index');
 });
 
 

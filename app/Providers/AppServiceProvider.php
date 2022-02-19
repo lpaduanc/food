@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\Plano;
-use App\Observers\PlanoObserver;
+use App\Models\Plan;
+use App\Observers\PlanObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +25,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Plano::observe(PlanoObserver::class);
+        Plan::observe(PlanObserver::class);
     }
 }

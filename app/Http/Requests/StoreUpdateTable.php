@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Tenant\Rules\UniqueTenant;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePlanRequest extends FormRequest
+class StoreUpdateTable extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,23 +24,17 @@ class StorePlanRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->segment(3);
+
         return [
-            'name' => [
+            'identify' => [
                 'required',
                 'min:3',
                 'max:255',
-                "unique:plans,name,{$this->segment(3)},url"
-                // único na tabela planos quando a url no segmento 3(parte da url) é diferente da url atual
+                //"unique:tables,identify,{$id},id"
+                new UniqueTenant('tables', $id),
             ],
-            'description' => [
-                'nullable',
-                'min:3',
-                'max:255'
-            ],
-            'price' => [
-                'required',
-                "regex:/^\d+(\,\d{1,2})?$/"
-            ]
+            'description' => ['required', 'min:3', 'max:1000'],
         ];
     }
 }

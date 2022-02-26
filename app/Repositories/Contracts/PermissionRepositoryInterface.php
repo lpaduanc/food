@@ -19,7 +19,9 @@ interface PermissionRepositoryInterface
 
     public function update(array $data): bool;
 
-    public function destroy(int $permission): bool;
+    public function destroy(int $permissionId): bool;
 
-    public function search(array $data): Permission;
+    public function search(string $filter): LengthAwarePaginator;
+
+    public function getByIds(array $data): LengthAwarePaginator;
 }

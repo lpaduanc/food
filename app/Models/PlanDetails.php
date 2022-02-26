@@ -11,6 +11,7 @@ class PlanDetails extends Model
 
     protected $fillable = [
         'name',
+        'plan_id',
     ];
 
     // relacionamento de que o detalhe pertence a um plano

@@ -52,16 +52,21 @@ class PermissionRepository implements PermissionRepositoryInterface
         return $this->permissionModel->delete($permissionId);
     }
 
-    public function search(array $data): Permission
+    public function search(string $filter): LengthAwarePaginator
     {
         return $this->permissionModel
-            ->where(function ($query) use ($data) {
-                if ($data['filter']) {
+            ->where(function ($query) use ($filter) {
+                if ($filter) {
                     $query
-                        ->where('nome', $data['filter'])
-                        ->orWhere('descricao', 'LIKE', "%{$data['filter']}%");
+                        ->where('name', 'LIKE', "%{$filter}%")
+                        ->orWhere('description', 'LIKE', "%{$filter}%");
                 }
             })
             ->paginate();
+    }
+
+    public function getByIds(array $permissionIds): LengthAwarePaginator
+    {
+        return $this->permissionModel->whereIn('id', $permissionIds)->paginate();
     }
 }

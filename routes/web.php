@@ -36,14 +36,17 @@ Route::prefix('admin')
     /**
      * Perfis
      */
-    Route::get('profile/create', [ProfileController::class, 'create'])->name('profile.create');
-    Route::delete('profile/{idPerfil}', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::any('profile/filter', [ProfileController::class, 'search'])->name('profile.search');
-    Route::get('profile/{idPerfil}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('profile/{idPerfil}', [ProfileController::class, 'update'])->name('profile.update');
-    Route::get('profile/{idPerfil}', [ProfileController::class, 'show'])->name('profile.show');
-    Route::post('profile/store', [ProfileController::class, 'store'])->name('profile.store');
-    Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('profiles/{id}/permissions/store', [ProfileController::class, 'storePermissionToProfile'])->name('profile.permission.store');
+    Route::get('profiles/{id}/permissions/create', [ProfileController::class, 'getAvailablePermissions'])->name('profile.permission.create');
+    Route::get('profiles/{id}/permissions', [ProfileController::class, 'getProfilePermissions'])->name('profile.permission');
+    Route::get('profiles/create', [ProfileController::class, 'create'])->name('profile.create');
+    Route::delete('profiles/{idPerfil}', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::any('profiles/filter', [ProfileController::class, 'search'])->name('profile.search');
+    Route::get('profiles/{idPerfil}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('profiles/{idPerfil}', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('profiles/{idPerfil}', [ProfileController::class, 'show'])->name('profile.show');
+    Route::post('profiles/store', [ProfileController::class, 'store'])->name('profile.store');
+    Route::get('profiles', [ProfileController::class, 'index'])->name('profile.index');
 
     /**
      * Plano

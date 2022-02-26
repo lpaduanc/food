@@ -42,8 +42,13 @@ class PermissionService
         return $this->permissionRepository->destroy($permissionId);
     }
 
-    public function search(array $data)
+    public function search(string $filter): LengthAwarePaginator
+    {        
+        return $this->permissionRepository->search($filter);
+    }
+
+    public function getByIds(array $permissionIds)
     {
-        return $this->permissionRepository->search($data);
+        return $this->permissionRepository->getByIds($permissionIds);
     }
 }

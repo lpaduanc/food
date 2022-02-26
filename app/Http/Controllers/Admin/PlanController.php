@@ -3,25 +3,27 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StorePlanRequest;
-use App\Http\Requests\StoreUpdatePlanoRequest;
+use App\Http\Requests\StoreUpdatePlan;
 use App\Models\Plan;
 use Illuminate\Http\Request;
 
 class PlanController extends Controller
 {
-    private $planRepository;
+    private $repository;
 
-    public function __construct(
-        Plan $plan
-    )
+    public function __construct(Plan $plan)
     {
-        $this->planRepository = $plan;
+        $this->repository = $plan;
+
+        $this->middleware(['can:plans']);
     }
+
     public function index()
     {
+        $plans = $this->repository->latest()->paginate();
+
         return view('admin.pages.plans.index', [
-            'plans' => $this->planRepository->latest()->paginate()
+            'plans' => $plans,
         ]);
     }
 
@@ -30,20 +32,19 @@ class PlanController extends Controller
         return view('admin.pages.plans.create');
     }
 
-    public function store(StorePlanRequest $storePlanRequest)
+    public function store(StoreUpdatePlan $request)
     {
-        $this->planRepository->create($storePlanRequest->all());
+        $this->repository->create($request->all());
 
         return redirect()->route('plans.index');
     }
 
     public function show($url)
     {
-        $plan = $this->planRepository->where('url', $url)->first();
+        $plan = $this->repository->where('url', $url)->first();
 
-        if (!$plan) {
+        if (!$plan)
             return redirect()->back();
-        }
 
         return view('admin.pages.plans.show', [
             'plan' => $plan
@@ -52,19 +53,18 @@ class PlanController extends Controller
 
     public function destroy($url)
     {
-        $plan = $this->planRepository
-            ->with('detalhes')
-            ->where('url', $url)
-            ->first();
-        
-        if (!$plan) {
-            return redirect()->back();
-        }
+        $plan = $this->repository
+                        ->with('details')
+                        ->where('url', $url)
+                        ->first();
 
-        if ($this->verifyIfDetailExists($plan)) {
+        if (!$plan)
+            return redirect()->back();
+
+        if ($plan->details->count() > 0) {
             return redirect()
-                ->back()
-                ->with('erro', 'Impossível excluir. Plano possui detalhes.');
+                        ->back()
+                        ->with('error', 'Existem detahes vinculados a esse plano, portanto não pode deletar');
         }
 
         $plan->delete();
@@ -74,41 +74,37 @@ class PlanController extends Controller
 
     public function search(Request $request)
     {
+        $filters = $request->except('_token');
+
+        $plans = $this->repository->search($request->filter);
+
         return view('admin.pages.plans.index', [
-            'plans' => $this->planRepository->pesquisar($request->filter),
-            'filter' => $request->except('_token')
+            'plans' => $plans,
+            'filters' => $filters,
         ]);
     }
 
     public function edit($url)
     {
-        $plan = $this->planRepository->where('url', $url)->first();
+        $plan = $this->repository->where('url', $url)->first();
 
-        if (!$plan) {
+        if (!$plan)
             return redirect()->back();
-        }
 
         return view('admin.pages.plans.edit', [
             'plan' => $plan
         ]);
     }
 
-    public function update(StorePlanRequest $storePlanRequest, $url)
+    public function update(StoreUpdatePlan $request, $url)
     {
-        $plan = $this->planRepository->where('url', $url)->first();
+        $plan = $this->repository->where('url', $url)->first();
 
-        if (!$plan) {
+        if (!$plan)
             return redirect()->back();
-        }
 
-        $plan->update($storePlanRequest->all());
+        $plan->update($request->all());
 
         return redirect()->route('plans.index');
-    }
-
-    // passar para um service
-    private function verifyIfDetailExists(Plan $plan)
-    {
-        return $plan->details->count() > 0;
     }
 }

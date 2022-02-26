@@ -31,6 +31,7 @@
             </form>
         </div>
         <div class="card-body">
+            @include('admin.includes.alerts')
             <table class="table table-condensed">
                 <thead>
                     <tr>
@@ -42,12 +43,12 @@
                     @foreach ($profiles as $profile)
                         <tr>
                             <td>
-                                {{ $profile->nome }}
+                                {{ $profile->name }}
                             </td>
-                            <td>
-                                {{-- <a href="{{ route('detalhes.profile.index', $profile->url) }}" class="btn btn-primary">Detalhes</a> --}}
-                                <a href="{{ route('perfis.show', $profile->id) }}" class="btn btn-warning">Ver</a>
-                                <a href="{{ route('perfis.edit', $profile->id) }}" class="btn btn-info">Editar</a>
+                            <td>                                
+                                <a href="{{ route('profile.show', $profile->id) }}" class="btn btn-warning">Ver</a>
+                                <a href="{{ route('profile.edit', $profile->id) }}" class="btn btn-info">Editar</a>
+                                <a href="{{ route('profile.permission', $profile->id) }}" class="btn btn-warning"><i class="fas fa-lock"></i></a>
                             </td>
                         </tr>
                     @endforeach

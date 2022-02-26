@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreProfileRequest extends FormRequest
+class StoreUpdateRole extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,11 @@ class StoreProfileRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->segment(3);
+
         return [
-            'name' => "required|min:3|max:255|unique:profiles,name,{$this->segment(3)},id",
-            'description' => 'nullable|min:3|max:255'
+            'name' => "required|min:3|max:255|unique:roles,name,{$id},id",
+            'description' => 'nullable|min:3|max:255',
         ];
     }
 }
